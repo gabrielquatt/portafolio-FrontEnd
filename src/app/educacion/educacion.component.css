@@ -1,0 +1,87 @@
+
+ 
+
+  /* .parent-education {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    }
+    
+    .div1-education { grid-area: 1 / 1 / 2 / 5; }
+    .div2-education { grid-area: 1 / 5 / 2 / 6; }
+    .div3-education { grid-area: 2 / 1 / 3 / 6; } */
+
+    .alert{
+    position: relative;
+    padding: 1px;
+    margin-bottom: opx;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    }
+
+
+    
+/* #### RESUME PAGE #### */
+/* .resume{
+  padding: 0rem 0 2.5rem 0;
+} */
+.resume > .text{
+  margin: 1.5rem auto;
+  text-align: center;
+}
+.resume .item{
+  padding: 0 2.5rem;
+  margin: 0 2.5rem 0 2.5rem;
+  border-left: 1px solid var(--green);
+  position: relative;
+}
+.resume .item > span{
+  background: var(--nero);
+  border-radius: 15px;
+  padding: 0.25rem 0.7rem;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+
+.resume .item h2{
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+.resume .item h2 span{
+  font-size: 1rem;
+  color: var(--green);
+}
+.resume .item h2 .span2{
+  font-size: 1rem;
+  color: var(--warning2);
+}
+.resume .item .text{
+  font-size: 1rem;
+  padding-bottom: 0;
+}
+.resume .icon{
+  position: absolute;
+  top: 0;
+  width: 50px;
+  height: 50px;
+  background: var(--green);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: -25px;
+}
+
+.education{
+  width: 100%;
+  padding: 0%;
+}
+
+.education>.row{
+  width: 100%;
+}

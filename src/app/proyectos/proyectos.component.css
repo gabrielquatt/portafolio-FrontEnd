@@ -1,0 +1,18 @@
+  /* ---------------------------------------- */
+  .proyectos{
+    background-color: var(--background-color1);
+  }
+
+  .parent-project {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(1, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    }
+    
+    .div1-project { grid-area: 1 / 1 / 4 / 2; }
+    .div2-project { grid-area: 2 / 2 / 3 / 6; }
+    .div3-project { grid-area: 3 / 2 / 4 / 6; }
+    .div4-project { grid-area: 1 / 2 / 2 / 4; }
+    .div5-project { grid-area: 1 / 4 / 2 / 5; }

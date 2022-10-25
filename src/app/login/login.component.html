@@ -1,0 +1,32 @@
+
+
+<div class="backgroun-Login ">
+<div class="position-absolute top-50 start-50 translate-middle">   
+    <form  class="bg-dark p-4"> 
+        <div class="text-center">
+          <h1>LOGIN ADMIN</h1>
+        </div>
+          <hr>
+
+          <div class="mb-4">
+            <label for="exampleFormControlInput1" class="form-label">Nombre de Usuario</label>
+            <input type="text" [(ngModel)]="user.userName" class="form-control" name="InputName" placeholder="">
+          </div>
+           
+            <div class="mb-4">
+              <label for="exampleFormControlInput1" class="form-label">Contraseña</label>
+              <input type="password" [(ngModel)]="user.password" class="form-control" name="inputPassword">           
+            </div>
+            <div class="text-center">
+              <input type="submit" value="LOGIN"   class="btn-green w-100 text-light" (click)="LoginForm()">
+              <hr>
+              
+              <div class="nav-item">
+                <a  value="LOGIN" href="/home"  class="w-100 nav-link" (click)="LoginForm()">acceder como invitado</a>
+              </div>
+            </div>
+          </form>
+          
+        </div>
+      </div>
+

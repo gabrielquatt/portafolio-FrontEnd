@@ -1,0 +1,226 @@
+<section id="skills" class="skills p-4">
+  <div class="p-4">
+    <div class="p-4 container text-center">
+      <div class="row">
+        <div class="col-3" data-aos="flip-up" data-aos-duration="800">
+          <div class="text-center p-2">
+            <h1>SKILLS</h1>
+            <img src="../../assets/img/skills.svg" width="" height="250" class="rounded mx-auto d-block p-2"
+              alt="logo Educacion">
+            <div *ngIf="active()">
+              <button (click)="openModal(myModalNewSkill)" class="btn btn-outline-success w-100 p-2">Agregar Skill</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-9">
+          <div class="row row-cols-1 row-cols-md-5 g-2">
+            <div class="col p-2 justify-content-center" *ngFor="let s of skills" data-aos="flip-up">
+              <div class="card">
+                <img [src]="s.imgUrl" height='120rem' width='' class="card-img-top" [alt]="s.name">
+                <div class="card-body">
+                  <h5 class="card-title">{{s.name}}</h5>
+
+                  <ng-container *ngIf="s.level === 1; else second">
+                    <p><span>Nivel:</span> BASICO</p>
+        
+                    <div class = "progress">
+                      <div class = "progress-bar w-30"></div>
+                    </div>
+                  </ng-container>
+
+                  <ng-template #second>
+                    <ng-container *ngIf="s.level === 2;else third">
+                      <p class="card-text"><span>Nivel:</span> INTERMEDIO</p>              
+                    <div class = "progress">
+                      <div class = "progress-bar w-50"></div>
+                    </div>
+                    </ng-container>
+                  </ng-template>
+
+                  <ng-template #third>
+                    <ng-container *ngIf="s.level === 3; else fourt">
+                      <p><span>Nivel:</span> ALTO</p>                   
+                    <div class = "progress">
+                      <div class = "progress-bar w-70"></div>
+                    </div>
+                    </ng-container>
+                  </ng-template>
+
+                  <ng-template #fourt>
+                    <p><span>Nivel:</span> AVANZADO</p>
+                    <div class = "progress">
+                      <div class = "progress-bar w-90"></div>
+                    </div>
+                  </ng-template>
+
+                </div>
+
+                <div *ngIf="active()">
+                  <button type="button" class="btn btn-warning w-50" (click)="openModalSkill(mymodalSkill, s)">Editar <i
+                      class="fa fa-pencil" aria-hidden="true"></i></button>
+                  <button type="button" class="btn btn-danger w-50" (click)="deleteSkill(s.idSkill, s.imgId)">Eliminar
+                    <i class="fa fa-trash" aria-hidden="true"></i></button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- --------------------------------------------------------------------------------------------------------------------- -->
+      <br>
+      <br>
+      <br>
+      <!-- --------------------------------------------------------------------------------------------------------------------- -->
+      
+      <div class="container justify-content-center inline m-4">
+        <div class="row">
+          <div class="col-8 m-4">
+            <div class="containern m-4">
+              <div class="text-center">
+                <div class="card m-4 bg-dark" *ngFor="let l of languages" data-aos="fade-up" data-aos-duration="1000">
+                  <div class="card-body">
+                    <p>{{l.name}}</p>
+                    <p>{{l.level}}</p>
+                    <div *ngIf="active()">
+                      <button type="button" class="btn btn-outline-warning w-50" (click)="openModalLenguaje(mymodal, l)">Editar
+                        <i class="fa fa-pencil" aria-hidden="true"></i></button>
+                      <button type="button" class="btn btn-outline-dan w-50" (click)="deleteLang(l.id_Lenguage)">Eliminar <i
+                          class="fa fa-trash" aria-hidden="true"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <h1>IDIOMAS</h1>
+            <img src="../../assets/img/idioma.svg" width="150" height="150" class="rounded" alt="logo Educacion">
+            <div *ngIf="active()" class="m-2">
+              <button (click)="openModal(myModalNewLang)" class="btn btn-outline-success w-100 p-2">Agregar Lenguaje</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- --------------------------------------------------------------------------------------------------------------------- -->
+
+      <!-- Editar Skill -->
+      <ng-template #mymodalSkill let-modal>
+        <div class="modal-header form-modal">
+          <h4 class="modal-title" id="modal-basic-title">Editar Dato Skill</h4>
+          <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">X</span>
+          </button>
+        </div>
+        <div class="modal-body form-modal">
+          <p>"Nombre : {{skillAux.name}}"</p>
+          <input class="w-100 form-control" [(ngModel)]="skillEdit.name" name="name" type="text"
+            placeholder="{{skillAux.name}}" require>
+          <p></p>
+          <select class="custom-select custom-select-lg mb-3 form-control" [(ngModel)]="skillEdit.level">
+            <option selected value="1">Basico</option>
+            <option value="2">Medio</option>
+            <option value="3">Alto</option>
+          </select>
+          <p></p>
+          <p>Cambiar Logo</p>
+          <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupFile01">Upload</label>
+            <input type="file" class="form-control" (change)="seleccionarFoto($event)" id="inputGroupFile01"
+              placeholder="cargar">
+          </div>
+        </div>
+        <div class="modal-footer form-modal">
+          <button type="button" class="btn btn-success" (click)="editSkill()">Edit</button>
+        </div>
+      </ng-template>
+
+      <!-- Edit Lenguaje -->
+      <ng-template #mymodal let-modal>
+        <div class="modal-header form-modal">
+          <h4 class="modal-title" id="modal-basic-title">Editar Dato Lenguaje</h4>
+          <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">X</span>
+          </button>
+        </div>
+        <div class="modal-body form-modal">
+          <p>"Nombre : {{langAux.name}}"</p>
+          <input class="w-100 form-control" [(ngModel)]="langEdit.name" name="name" type="text"
+            placeholder="{{langAux.name}}" require>
+          <p></p>
+          <select class="custom-select custom-select-lg mb-3 form-control" [(ngModel)]="langEdit.level">
+            <option selected value="1">Basico</option>
+            <option value="2">Medio</option>
+            <option value="3">Alto</option>
+            <option value="3">Avanzado</option>
+          </select>
+        </div>
+        <div class="modal-footer form-modal">
+          <button type="button" class="btn btn-success" (click)="modal.close(editLang())">Guardar</button>
+        </div>
+      </ng-template>
+
+      <!--New Skill -->
+      <ng-template #myModalNewSkill let-modal>
+        <div class="modal-header form-modal">
+          <h4 class="modal-title" id="modal-basic-title">Editar Dato Skill</h4>
+          <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">X</span>
+          </button>
+        </div>
+        <div class="modal-body form-modal">
+          <p>"Nombre : {{skillAux.name}}"</p>
+          <input class="w-100 form-control" [(ngModel)]="skill.name" name="name" type="text"
+            placeholder="{{skillAux.name}}" require>
+          <p></p>
+          <select class="custom-select custom-select-lg mb-3 form-control" [(ngModel)]="skill.level">
+            <option selected value="1">Basico</option>
+            <option value="2">Medio</option>
+            <option value="3">Alto</option>
+            <option value="4">Avanzado</option>
+          </select>
+          <p></p>
+          <p>Cambiar Logo</p>
+          <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupFile01">Upload</label>
+            <input type="file" class="form-control" (change)="seleccionarFoto($event)" id="inputGroupFile01"
+              placeholder="cargar">
+          </div>
+        </div>
+        <div class="modal-footer form-modal">
+          <button type="button" class="btn btn-success" (click)="saveSkill()">Guardar</button>
+        </div>
+      </ng-template>
+
+      <!-- New Lenguaje -->
+      <ng-template #myModalNewLang let-modal>
+        <div class="modal-header form-modal">
+          <h4 class="modal-title" id="modal-basic-title">Nuevo Info Lenguaje</h4>
+          <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">X</span>
+          </button>
+        </div>
+        <div class="modal-body form-modal">
+          <p>"Nombre : {{langAux.name}}"</p>
+          <input class="w-100 form-control" [(ngModel)]="lang.name" name="name" type="text"
+            placeholder="{{langAux.name}}" require>
+          <p></p>
+          <select class="custom-select custom-select-lg mb-3 form-control" [(ngModel)]="lang.level">
+            <option selected value="1">Basico</option>
+            <option value="2">Medio</option>
+            <option value="3">Alto</option>
+          </select>
+        </div>
+        <div class="modal-footer form-modal">
+          <button type="button" class="btn btn-success" (click)="modal.close(saveLang())">Guardar</button>
+        </div>
+      </ng-template>
+
+    </div>
+  </div>
+</section>

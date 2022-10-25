@@ -1,0 +1,17 @@
+    <app-nav></app-nav> 
+    <div *ngIf="person.name !== 'gabriel' ;else spinner ">
+        <app-spinners></app-spinners>
+        
+    </div>
+
+    <ng-template #spinner>
+        <app-banner></app-banner>
+        <app-experiencia></app-experiencia>
+        <app-educacion></app-educacion>
+        <app-skills></app-skills>
+        <app-proyectos></app-proyectos>
+    </ng-template>
+    
+    
+    <app-footer></app-footer>
+

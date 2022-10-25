@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "portafolio-web-gq-31166": {
+      "hosting": {
+        "portafolio-web": [
+          "portafolio-web-gq-31166"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "portafolio-web-gq-31166"
+  }
+}

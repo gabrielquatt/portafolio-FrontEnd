@@ -1,0 +1,49 @@
+
+  /* Skills */
+  .skills{
+    height: auto;
+  }
+  
+  .parent2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    }
+    .div4 { grid-area: 1 / 1 / 2 / 2; }
+    .div5 { grid-area: 1 / 2 / 2 / 3; }
+
+    .card-body{
+      padding: 0.5rem;
+      background-color: rgba(0, 0, 0, 0);
+    }
+    
+   
+
+    .progress{
+      margin: 0.8rem 0;
+      border-radius: 10px;
+      height: 16px;
+      width: 100%;
+      background-color: var(--nero);
+      overflow: hidden;
+  }
+  .progress-bar{
+      background: var(--green);
+      height: 100%;
+      border-top-right-radius: 2px;
+      border-bottom-right-radius: 2px;
+  }
+  .progress-bar.w-90{
+      width: 90%;
+  }
+  .progress-bar.w-70{
+      width: 70%;
+  }
+  .progress-bar.w-50{
+      width: 50%;
+  }
+  .progress-bar.w-30{
+      width: 30%;
+  }

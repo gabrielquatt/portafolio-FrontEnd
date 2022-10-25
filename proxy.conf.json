@@ -1,0 +1,8 @@
+{
+    "/api/*":{
+        "target":"https://evening-plains-46907.herokuapp.com",
+        "segure":true,
+        "logLevel":"debug",
+        "changeOrigin": true
+    }
+}

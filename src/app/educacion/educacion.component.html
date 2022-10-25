@@ -1,0 +1,119 @@
+<section id="educacion" class="educacion p-4">
+
+  <div class="container">
+
+    <div class="row">
+   
+      <div class="col-3" data-aos="zoom-out-left">
+        <div class="justify-content-center text-center p-4 ">
+          <h1>EDUCACION</h1>
+          <img src="../../assets/img/education.svg"  width="180" height="180" class="rounded mx-auto d-block p-2"
+            alt="logo Educacion">
+          <div *ngIf="active()" class="col-md-12">
+            <button (click)="openNewEdu(mymodalEduNew)" class="btn btn-outline-success w-100 p-2">Agregar Titulos/Cursos</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-9">
+        <div class="bg-dark p-2 m-4 shadow-lg" *ngFor="let edu of eduList" data-aos="zoom-out-left">
+
+
+          <section class="resume container education">
+            <div class="row ">
+              <div class="item">
+                <div class="icon">
+                  <i class="fas fa-graduation-cap"></i>
+                </div>
+
+                <ng-container *ngIf="edu.status === 'En Progreso' ;else second">
+                  <h2>{{edu.institute}} - <span class="span2"> {{edu.status}}</span></h2>
+                </ng-container>
+      
+                <ng-template #second>
+                  <h2>{{edu.institute}} - <span> {{edu.status}}</span></h2>
+                </ng-template>
+              
+                <p class="text">{{edu.name}}</p>
+                <div *ngIf="active()">
+                  <button type="button" class="btn btn-outline-warning w-50" (click)="openModalTitle(mymodalEdu,edu)">Editar <i
+                      class="fa fa-pencil" aria-hidden="true"></i></button>
+                  <button type="button" class="btn btn-outline-danger w-50" (click)="deleteEdu(edu.idTitle)">Eliminar <i
+                      class="fa fa-trash" aria-hidden="true"></i></button>
+                </div>
+              </div>
+            </div>
+           
+          </section>
+
+        </div>
+      </div>
+
+    </div>
+   
+  </div>
+
+
+  <!-- Model Edit Education -->
+  <ng-template #mymodalEdu let-modal>
+    <div class="modal-header form-modal">
+      <h4 class="modal-title" id="modal-basic-title">Editar Dato Titulo</h4>
+      <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">X</span>
+      </button>
+    </div>
+    <div class="modal-body form-modal">
+      <div class="modal-body form-modal">
+        <div>
+          <p>Institucion: {{eduAux.institute}}</p>
+          <input type="text" placeholder="Institucion" [(ngModel)]="eduEdit.institute">
+        </div>
+        <div>
+          <p>Titulo: {{eduAux.name}}</p>
+          <input type="text" placeholder="titulo" [(ngModel)]="eduEdit.name">
+        </div>
+        <div>
+          <p>estado: {{eduAux.status}}</p>
+          <select class="custom-select custom-select-lg mb-3 form-control" [(ngModel)]="eduEdit.status">
+            <option selected value="En Progreso">En Progreso</option>
+            <option value="Completo">Completo</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer form-modal">
+      <button *ngIf="active()" type="button" class="btn btn-success" (click)="modal.close(editEdu())">Guardar</button>
+    </div>
+  </ng-template>
+
+  <!-- Model New Education -->
+  <ng-template #mymodalEduNew let-modal>
+    <div class="modal-header form-modal">
+      <h4 class="modal-title" id="modal-basic-title">Agregar Dato Titulo</h4>
+      <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">X</span>
+      </button>
+    </div>
+    <div class="modal-body form-modal">
+      <div>
+        <p>Institucion</p>
+        <input type="text" placeholder="Institucion" [(ngModel)]="edu.institute">
+      </div>
+      <div>
+        <p>Titulo</p>
+        <input type="text" placeholder="titulo" [(ngModel)]="edu.name">
+      </div>
+      <div>
+        <p>estado</p>
+        <select class="custom-select custom-select-lg mb-3 form-control" [(ngModel)]="edu.status">
+          <option selected value="En Progreso">En Progreso</option>
+          <option value="Finalizado">Finalizado</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer form-modal">
+      <button *ngIf="active()" type="button" class="btn btn-success" (click)="modal.close(saveEdu())">Guardar</button>
+    </div>
+  </ng-template>
+
+</section>

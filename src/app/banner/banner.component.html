@@ -1,0 +1,88 @@
+<div class="btn_flotante">
+  <a href="#nav" class="btn-mas"><label for="btn-mas" class="fa fa-home"></label></a>
+</div>
+
+
+  <!-- home page -->
+  <section class = "home container">
+    <div class = "row">
+      <div class = "row-left">
+        <h3>hola!</h3>
+        <h1>Soy <span>{{person.name}} {{person.last_name}}</span></h1>
+        <h2> freelance web designer</h2>
+        <div class = "home-pg-btn">
+          <span>{{person.about}}</span>
+        </div>
+        <div *ngIf="active()">
+          <button type="button" class="btn btn-outline-warning" (click)="openModalEditPerfil(mymodal, person)">EDITAR PERFIL  <i class="fa fa-pencil" aria-hidden="true"></i></button>
+        </div>
+      </div>
+
+      <div class = "row-right">
+        <div class = "img-border">
+          <div class = "img-container">
+            <img [src]="person.img_perfil" [alt]="pAux.name"sizes="(min-width: 75em) 25vw, (max-width: 20em) 80vw, 50vw" width="450" height="auto">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- end of home page -->
+
+
+<!-- <div class="parent text-center container-banner" >
+  <div class="div1"> 
+    <div class="container-img">
+      <img [src]="person.img_perfil" [alt]="pAux.name">
+    </div>
+  </div>
+  <div class="div2">
+     <div class="blur-text">{{person.name}} {{person.last_name}} </h1>
+        <h4>DESARROLLADOR WEB</h4>
+      </div>
+      <div *ngIf="active()">
+        <button type="button" class="btn btn-warning" (click)="openModalEditPerfil(mymodal, person)">EDITAR PERFIL<i class="fa fa-pencil" aria-hidden="true"></i></button>
+      </div>
+  </div>
+  <div class="div3">
+    <div class="blur-text-about">
+      <p>{{person.about}}</p>
+    </div>
+  </div>
+</div>
+ -->
+
+
+    <!-- Edit Perfil -->
+    <ng-template #mymodal let-modal class="">
+      <div class="modal-header form-modal p-2 bg-dark">
+        <h4 class="modal-title" id="modal-basic-title">Editar Informacion Personal</h4>
+        <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">X</span>
+        </button>
+      </div>
+
+      <div class="modal-body form-modal bg-dark">
+        <p>NOMBRE : {{pAux.name}}</p>
+        <input class="w-100 form-control" [(ngModel)]="pEdit.name" name="name" type="text" placeholder="{{pAux.name}}" require>
+        <p></p>
+        <p>APELLIDO : {{pAux.last_name}}</p>
+        <input class="w-100 form-control" [(ngModel)]="pEdit.last_name" name="name" type="text" placeholder="{{pAux.last_name}}" require>
+        <p></p>
+        <p> SOBRE MI : {{pAux.about}}</p>
+        <textarea class="w-100 form-control" [(ngModel)]="pEdit.about" name="name" type="text" placeholder="{{pAux.about}}" require> </textarea>
+
+        <p></p>
+        <p>Cambiar Imagen de Perfil</p>
+        <div class="input-group mb-3">  
+          <input type="file" class="form-control" (change)="seleccionarFoto($event)" id="inputGroupFile01"
+            placeholder="cargar">
+        </div>
+      </div>
+
+      <div class="modal-footer form-modal bg-dark">
+        <button type="button" class="btn btn-success" (click)="modal.close(editPerson())">Guardar</button>
+      </div>
+
+    </ng-template>
+
