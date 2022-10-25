@@ -4,11 +4,10 @@
 
     <div class="row">
    
-      <div class="col-3" data-aos="zoom-out-left">
-        <div class="justify-content-center text-center p-4 ">
+      <div class="col-3 p-4" data-aos="zoom-out-left">
+        <div class="justify-content-center text-center">
           <h1>EDUCACION</h1>
-          <img src="../../assets/img/education.svg"  width="180" height="180" class="rounded mx-auto d-block p-2"
-            alt="logo Educacion">
+          <div class="logo-edu"></div>
           <div *ngIf="active()" class="col-md-12">
             <button (click)="openNewEdu(mymodalEduNew)" class="btn btn-outline-success w-100 p-2">Agregar Titulos/Cursos</button>
           </div>
@@ -16,8 +15,7 @@
       </div>
 
       <div class="col-9">
-        <div class="bg-dark p-2 m-4 shadow-lg" *ngFor="let edu of eduList" data-aos="zoom-out-left">
-
+        <div class=" p-4 m-4 shadow rounded bg-color" *ngFor="let edu of eduList" data-aos="zoom-out-left">
 
           <section class="resume container education">
             <div class="row ">

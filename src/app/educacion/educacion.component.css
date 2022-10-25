@@ -85,3 +85,18 @@
 .education>.row{
   width: 100%;
 }
+
+.logo-edu {
+  background-color: var(--green);
+  height:15rem;
+  -webkit-mask: url("../../assets/img/education.svg") no-repeat center;
+  mask: url("../../assets/img/education.svg") no-repeat center;
+  transform: scale(1.4);
+}
+
+
+@media screen and (max-width: 1200px){
+  .logo-edu{
+    display: none;
+  }
+}

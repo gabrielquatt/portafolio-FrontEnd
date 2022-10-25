@@ -5,10 +5,9 @@
     <div class="row">
 
       <div class="col-3 " data-aos="flip-up">
-        <div class="text-center p-4 title-exp">
-          <h1><span>Experiencia Laboral</span></h1>
-          <img src="../../assets/img/experiencia.svg" width="" height="200" class="rounded mx-auto d-block p-2"
-            alt="logo experiencia">
+        <div class="text-center title-exp">
+          <h1>Experiencia Laboral</h1>
+          <div class="logo-exp"></div>
           <div *ngIf="active()">
             <button (click)="openNewExp(myNewmodalExp)" class="btn btn-outline-success w-100 p2">Agregar Experiencia
               Laboral</button>
@@ -17,7 +16,7 @@
       </div>
 
       <div class="col-9">
-        <div class="card bg-dark p-2 m-2" *ngFor="let exp of experienceList" data-aos="flip-up">
+        <div class="card p-2 m-2 shadow rounded bg-color" *ngFor="let exp of experienceList" data-aos="flip-up">
           <div class="parent-exp" data-aos="fade-right">
             <div class="div1-exp"> <img [src]='exp.logoUrl' width="160" height="135" class="rounded mx-auto d-block"
                 [alt]="exp.name">

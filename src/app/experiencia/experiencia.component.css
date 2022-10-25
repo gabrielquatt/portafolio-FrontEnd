@@ -81,4 +81,17 @@
   }
 
  
+  .logo-exp {
+    background-color: var(--green);
+    height:20rem;
+    -webkit-mask: url("../../assets/img/experiencia.svg") no-repeat center;
+    mask: url("../../assets/img/experiencia.svg") no-repeat center;
+    transform: scale(3);
+  }
+
+  @media screen and (max-width: 1200px){
+    .logo-exp{
+      display: none;
+    }
+  }
 }

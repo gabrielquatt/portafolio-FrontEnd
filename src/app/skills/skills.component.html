@@ -1,12 +1,11 @@
 <section id="skills" class="skills p-4">
   <div class="p-4">
-    <div class="p-4 container text-center">
+    <div class=" container text-center">
       <div class="row">
         <div class="col-3" data-aos="flip-up" data-aos-duration="800">
           <div class="text-center p-2">
             <h1>SKILLS</h1>
-            <img src="../../assets/img/skills.svg" width="" height="250" class="rounded mx-auto d-block p-2"
-              alt="logo Educacion">
+            <div class="logo-skill"></div>
             <div *ngIf="active()">
               <button (click)="openModal(myModalNewSkill)" class="btn btn-outline-success w-100 p-2">Agregar Skill</button>
             </div>
@@ -14,9 +13,9 @@
         </div>
         
         <div class="col-9">
-          <div class="row row-cols-1 row-cols-md-5 g-2">
+          <div class="row row-cols-1 row-cols-md-4 g-2">
             <div class="col p-2 justify-content-center" *ngFor="let s of skills" data-aos="flip-up">
-              <div class="card">
+              <div class="card shadow rounded bg-color">
                 <img [src]="s.imgUrl" height='120rem' width='' class="card-img-top" [alt]="s.name">
                 <div class="card-body">
                   <h5 class="card-title">{{s.name}}</h5>
@@ -57,9 +56,9 @@
                 </div>
 
                 <div *ngIf="active()">
-                  <button type="button" class="btn btn-warning w-50" (click)="openModalSkill(mymodalSkill, s)">Editar <i
+                  <button type="button" class="btn btn-outline-warning w-50" (click)="openModalSkill(mymodalSkill, s)">Editar <i
                       class="fa fa-pencil" aria-hidden="true"></i></button>
-                  <button type="button" class="btn btn-danger w-50" (click)="deleteSkill(s.idSkill, s.imgId)">Eliminar
+                  <button type="button" class="btn btn-outline-danger w-50" (click)="deleteSkill(s.idSkill, s.imgId)">Eliminar
                     <i class="fa fa-trash" aria-hidden="true"></i></button>
                 </div>
 
@@ -75,35 +74,60 @@
       <br>
       <!-- --------------------------------------------------------------------------------------------------------------------- -->
       
-      <div class="container justify-content-center inline m-4">
+      <div class="container justify-content-center inline">
         <div class="row">
-          <div class="col-8 m-4">
-            <div class="containern m-4">
-              <div class="text-center">
-                <div class="card m-4 bg-dark" *ngFor="let l of languages" data-aos="fade-up" data-aos-duration="1000">
-                  <div class="card-body">
-                    <p>{{l.name}}</p>
-                    <p>{{l.level}}</p>
-                    <div *ngIf="active()">
-                      <button type="button" class="btn btn-outline-warning w-50" (click)="openModalLenguaje(mymodal, l)">Editar
-                        <i class="fa fa-pencil" aria-hidden="true"></i></button>
-                      <button type="button" class="btn btn-outline-dan w-50" (click)="deleteLang(l.id_Lenguage)">Eliminar <i
-                          class="fa fa-trash" aria-hidden="true"></i></button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
 
-          <div class="col">
-            <h1>IDIOMAS</h1>
-            <img src="../../assets/img/idioma.svg" width="150" height="150" class="rounded" alt="logo Educacion">
+          <div class="col-3 p-4 ">
+            <h3>IDIOMAS</h3>
+            <div class="logo-lang"></div>
             <div *ngIf="active()" class="m-2">
               <button (click)="openModal(myModalNewLang)" class="btn btn-outline-success w-100 p-2">Agregar Lenguaje</button>
             </div>
           </div>
+          <div class="col-9" >
 
+
+            <div class="p-4 m-4 shadow rounded bg-color" *ngFor="let l of languages" data-aos="fade-up" data-aos-duration="1000">
+          
+            <section class="resume container language" >
+              <div class="row ">
+                <div class="item">
+                  <div class="icon">
+                    <i class="fas fa-globe"></i>
+                  </div>
+
+                  <ng-container *ngIf="l.level === 1">
+                    <h2 class="p-2">{{l.name}}  <span class="span2">BASICO </span></h2>
+                  </ng-container>
+        
+                  <ng-container  *ngIf="l.level === 2">
+                    <h2 class="p-2">{{l.name}}  - <span> INTERMEDIO </span></h2>
+                  </ng-container>
+
+                  <ng-container *ngIf="l.level === 3">
+                    <h2 class="p-2">{{l.name}}  - <span> ALTO </span></h2>
+                  </ng-container>
+
+                  <ng-container *ngIf="l.level === 4">
+                    <h2 class="p-2">{{l.name}}  - <span> AVANZADO </span></h2>
+                  </ng-container>
+                 
+                  <div *ngIf="active()" class="">
+                    <button type="button" class="btn btn-outline-warning w-50" (click)="openModalLenguaje(mymodal, l)">Editar
+                      <i class="fa fa-pencil" aria-hidden="true"></i></button>
+                    <button type="button" class="btn btn-outline-danger w-50" (click)="deleteLang(l.id_Lenguage)">Eliminar <i
+                        class="fa fa-trash" aria-hidden="true"></i></button>
+                  </div>
+                </div>
+              </div>
+             
+            </section>
+          </div>
+
+
+          
+          </div>
+      
         </div>
       </div>
 

@@ -19,7 +19,8 @@ body{
   /*===== Colores =====*/
   --transition: all 0.4s ease;
   --green: #72b626;
-  --black: #111;
+  --black: rgb(14, 14, 14);
+  --bg-dark:  rgba(25, 37, 25, 0.133);
   --nero: #252525;
   --white: #fff;
   --warning2:rgb(249, 252, 90);
@@ -195,8 +196,11 @@ nav {
 }
 
 .card{
-  padding: 0 3rem 0 3rem;
-  background-color: rgba(0, 0, 0, 0);
+  padding: 0 1rem 0 1rem;
+}
+
+.bg-color{
+  background-color: var(--bg-dark);
 }
 
 
@@ -238,8 +242,7 @@ nav {
   }
 
   .card{
-    padding: 0 1rem 0 1rem;
-    background-color: rgba(0, 0, 0, 0);
+    padding: 5px 1rem 0  1rem;
   }
 
 }

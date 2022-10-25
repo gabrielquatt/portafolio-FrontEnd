@@ -16,10 +16,8 @@
 
     .card-body{
       padding: 0.5rem;
-      background-color: rgba(0, 0, 0, 0);
     }
-    
-   
+  
 
     .progress{
       margin: 0.8rem 0;
@@ -47,3 +45,84 @@
   .progress-bar.w-30{
       width: 30%;
   }
+
+.language{
+  width: 100%;
+}
+/* #### RESUME PAGE #### */
+/* .resume{
+  padding: 0rem 0 2.5rem 0;
+} */
+.resume > .text{
+  margin: 1.5rem auto;
+  text-align: center;
+}
+.resume .item{
+  padding: 0 2.5rem;
+  margin: 0 2.5rem 0 2.5rem;
+  border-left: 1px solid var(--green);
+  position: relative;
+}
+.resume .item > span{
+  background: var(--nero);
+  border-radius: 15px;
+  padding: 0.25rem 0.7rem;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+
+.resume .item h2{
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+.resume .item h2 span{
+  font-size: 1rem;
+  color: var(--green);
+}
+.resume .item h2 .span2{
+  font-size: 1rem;
+  color: var(--warning2);
+}
+.resume .item .text{
+  font-size: 1rem;
+  padding-bottom: 0;
+}
+.resume .icon{
+  position: absolute;
+  top: 0;
+  width: 50px;
+  height: 50px;
+  background: var(--green);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: -25px;
+}
+
+  
+.logo-skill {
+  background-color: var(--green);
+  height:15rem;
+  -webkit-mask: url("../../assets/img/skills.svg") no-repeat center;
+  mask: url("../../assets/img/skills.svg") no-repeat center;
+  transform: scale(1);
+}
+
+.logo-lang {
+  background-color: var(--green);
+  height:10rem;
+  -webkit-mask: url("../../assets/img/idioma.svg") no-repeat center;
+  mask: url("../../assets/img/idioma.svg") no-repeat center;
+  transform: scale(0.5);
+}
+
+
+@media screen and (max-width: 1200px){
+  .logo-skill,.logo-lang{
+    display: none;
+  }
+}
