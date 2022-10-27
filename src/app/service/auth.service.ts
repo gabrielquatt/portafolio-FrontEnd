@@ -7,7 +7,7 @@ import jwt_decode from 'jwt-decode';
 import swal from 'sweetalert2';
 
 
-const urlEndpoint = "/api/auth/";
+const urlEndpoint = "https://evening-plains-46907.herokuapp.com/api/auth/";
 
 
 @Injectable({
@@ -57,7 +57,13 @@ export class AuthService {
     }
 
     if(e.status==403){
-      swal.fire('Acceso denegado', `¡no tienes permisos para realizar esa accion!`,'error');
+      swal.fire({ //Acceso Denegado
+        title:'Acceso Denegado',
+        text: `¡no tienes permisos para realizar esa accion!`,
+        icon: 'error',
+        background: '#212422',
+        color: '#d80a0a'
+      });
       this.reload();
       return true;
     }
@@ -116,7 +122,13 @@ export class AuthService {
 
   logout(){
     this.clearSession();  
-    swal.fire('Logout', `¡Has cerrado sesión con exito!`,'success');
+    swal.fire({
+      title:'Logout',
+      text: '¡Has cerrado sesión con exito!',
+      icon: 'success',
+      background: '#212422',
+      color: '#72b626'
+    })
     this.router.navigate(['/login']);
   }
 

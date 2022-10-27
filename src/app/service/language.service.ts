@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Language } from '../Model/Language';
 
-const _url = '/api/language/';
+const _url = 'https://evening-plains-46907.herokuapp.com/api/language/';
 
 @Injectable({
   providedIn: 'root'

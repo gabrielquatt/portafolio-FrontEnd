@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import swal from 'sweetalert2';
 
-const _url = "/api/cloudinary/";
+const _url = "https://evening-plains-46907.herokuapp.com/api/cloudinary/";
 
 
 @Injectable({
@@ -15,7 +15,7 @@ export class ImagesService {
   public urlDefaultImg: String;
   
   constructor(private http:HttpClient) { 
-    this.urlDefaultImg = "http://res.cloudinary.com/dofzljqg7/image/upload/v1665287867/hvtavhhffmnwdcbewphh.png";
+    this.urlDefaultImg = "https://res.cloudinary.com/dofzljqg7/image/upload/v1666733928/default_wfetmj.png";
   }
   
   private agregarAuthorizationHeader() {

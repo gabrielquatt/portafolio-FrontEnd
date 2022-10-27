@@ -4,9 +4,7 @@ import { Proyect } from '../Model/Proyect';
 import { AuthService } from '../service/auth.service';
 import { ProyectService } from '../service/proyect.service';
 import { ImagesService } from '../service/images.service';
-// import swal from 'sweetalert2';
-import swal from 'sweetalert2/dist/sweetalert2.js';
-
+import { AlertsService } from '../service/alerts.service';
 @Component({
   selector: 'app-proyectos',
   templateUrl: './proyectos.component.html',
@@ -24,6 +22,7 @@ export class ProyectosComponent implements OnInit {
   pEdit: Proyect;
 
   constructor(
+    private alert:AlertsService,
     private pService:ProyectService,
     private modalService: NgbModal,
     private authService: AuthService,
@@ -46,44 +45,47 @@ export class ProyectosComponent implements OnInit {
   //Create
   saveProyect() {
     if (this.authService.isAuthenticated()) {
-      if (!this.imgService.fotoSeleccionada) {
-        this.p.imgProyect = this.imgService.urlDefaultImg;
-        this.pService.saveProject(this.p).subscribe(res => {
-
-          this.authService.reload();
-        }, err => {
-          if (err.status == 401) {
-            this.authService.clearSession();
-            swal.fire('ERROR', '¡no autenticado!', 'error')
-          }
-          if (err.status == 403) {
-            swal.fire('Acceso denegado', `¡no tienes permisos para realizar esa accion!`, 'error');
-          }
-        });
-      } else {
-
-        this.imgService.subirImgExp(this.imgService.fotoSeleccionada).subscribe(res => {
-          this.p.imgId = res.id;
-          this.p.imgProyect = res.imagenUrl;
-
+      if(this.p.name == null || this.p.description == null || this.p.link == null){
+        this.alert.alertCampVacios();
+      }else{
+        if (!this.imgService.fotoSeleccionada) {
+          this.p.imgProyect = this.imgService.urlDefaultImg;
           this.pService.saveProject(this.p).subscribe(res => {
-            this.imgService.fotoSeleccionada = null;
+  
             this.authService.reload();
           }, err => {
             if (err.status == 401) {
               this.authService.clearSession();
-              swal.fire('ERROR', '¡no autenticado!', 'error')
+              this.alert.alert401();
             }
             if (err.status == 403) {
-              swal.fire('Acceso denegado', `¡no tienes permisos para realizar esa accion!`, 'error');
+              this.alert.alert403();
             }
           });
-        });
+        } else {
+  
+          this.imgService.subirImgExp(this.imgService.fotoSeleccionada).subscribe(res => {
+            this.p.imgId = res.id;
+            this.p.imgProyect = res.imagenUrl;
+  
+            this.pService.saveProject(this.p).subscribe(res => {
+              this.imgService.fotoSeleccionada = null;
+              this.authService.reload();
+            }, err => {
+              if (err.status == 401) {
+                this.authService.clearSession();
+                this.alert.alert401();
+              }
+              if (err.status == 403) {
+                this.alert.alert403();
+              }
+            });
+          });
+        }
       }
-
     } else {
       this.authService.clearSession();
-      swal.fire('Error', `no se encuentra autenticado`, 'info')
+      this.alert.alertNoAuth();
     }
   }
 
@@ -96,6 +98,9 @@ export class ProyectosComponent implements OnInit {
       }
       if (this.pEdit.description == null) {
         this.pEdit.description = this.pAux.description;
+      }
+      if (this.pEdit.link == null) {
+        this.pEdit.link = this.pAux.link;
       }
       if (this.pEdit.imgId == null) {
         this.pEdit.imgId = this.pAux.imgId;
@@ -111,7 +116,7 @@ export class ProyectosComponent implements OnInit {
           }, err => {
             if (err.status == 401) {
               this.authService.clearSession();
-              swal.fire('ERROR', '¡no autenticado!', 'error')
+              this.alert.alert401();
             }
           });
         }
@@ -125,10 +130,10 @@ export class ProyectosComponent implements OnInit {
           }, err => {
             if (err.status == 401) {
               this.authService.clearSession();
-              swal.fire('ERROR', '¡no autenticado!', 'error')
+              this.alert.alert401();
             }
             if (err.status == 403) {
-              swal.fire('Acceso denegado', `¡no tienes permisos para realizar esa accion!`, 'error');
+              this.alert.alert403();
             }
           });
         });
@@ -138,16 +143,16 @@ export class ProyectosComponent implements OnInit {
         }, err => {
           if (err.status == 401) {
             this.authService.clearSession();
-            swal.fire('ERROR', '¡no autenticado!', 'error')
+            this.alert.alert401();
           }
           if (err.status == 403) {
-            swal.fire('Acceso denegado', `¡no tienes permisos para realizar esa accion!`, 'error');
+            this.alert.alert403();
           }
         });
       }
     } else {
       this.authService.clearSession();
-      swal.fire('Error', `no se encuentra autenticado`, 'info')
+      this.alert.alertNoAuth();
     }
   }
 
@@ -162,7 +167,7 @@ export class ProyectosComponent implements OnInit {
         }, err => {
           if (err.status == 401) {
             this.authService.clearSession();
-            swal.fire('ERROR', '¡no autenticado!', 'error')
+            this.alert.alert401();
           }
         });
       } else {
@@ -174,17 +179,17 @@ export class ProyectosComponent implements OnInit {
         }, err => {
           if (err.status == 401) {
             this.authService.clearSession();
-            swal.fire('ERROR', '¡no autenticado!', 'error')
+            this.alert.alert401();
           }
           if (err.status == 403) {
-            swal.fire('Acceso denegado', `¡no tienes permisos para realizar esa accion!`, 'error');
+            this.alert.alert403();
           }
         });
       }
 
     } else {
       this.authService.clearSession();
-      swal.fire('Error', `no se encuentra autenticado`, 'info')
+      this.alert.alertNoAuth();
     }
   }
 
@@ -196,12 +201,13 @@ export class ProyectosComponent implements OnInit {
 
   subirImgExp(): any {
     if (!this.imgService.fotoSeleccionada) {
-      swal.fire('Error: ', 'Debe seleccionar una foto', 'error');
+      this.alert.alertCampVaciosImg();
     } else {
       this.imgService.subirImgExp(this.imgService.fotoSeleccionada).subscribe(res => {
         console.log(res);
       });
-      swal.fire('Finalizado!', 'la foto se  cambio correctamente', 'success');
+      
+      this.alert.alertSaveImgSuccess();
     }
   }
 

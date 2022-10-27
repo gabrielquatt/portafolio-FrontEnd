@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Title } from '../Model/Title';
+import { AlertsService } from '../service/alerts.service';
 import { AuthService } from '../service/auth.service';
 import { EducationService } from '../service/education.service';
-// import swal from 'sweetalert2';
-import swal from 'sweetalert2/dist/sweetalert2.js';
-import { toInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
 
 @Component({
   selector: 'app-educacion',
@@ -16,20 +14,21 @@ export class EducacionComponent implements OnInit {
 
   eduList: Title[] = [];
 
-  edu:Title;
-  eduAux:Title;
-  eduEdit:Title;
-  
+  edu: Title;
+  eduAux: Title;
+  eduEdit: Title;
+
   closeResult: string | undefined;
 
   constructor(
-    private eduService:EducationService,
-    private modalService: NgbModal, 
-    private authService: AuthService) { 
-      this.edu=new Title();
-      this.eduAux = new Title();
-      this.eduEdit = new Title();
-    }
+    private alert:AlertsService,
+    private eduService: EducationService,
+    private modalService: NgbModal,
+    private authService: AuthService) {
+    this.edu = new Title();
+    this.eduAux = new Title();
+    this.eduEdit = new Title();
+  }
 
   ngOnInit(): void {
     this.eduService.getAllExperience().subscribe(resp => {
@@ -41,23 +40,26 @@ export class EducacionComponent implements OnInit {
 
   //Create
   saveEdu() {
-
     if (this.authService.isAuthenticated()) {
-   
-      this.eduService.saveEdu(this.edu).subscribe(res => {
-        this.authService.reload();
-      }, err => {
-        if (err.status == 401) {
-          this.authService.clearSession();
-          swal.fire('ERROR', '¡no autenticado!', 'error')
-        }
-        if (err.status == 403) {
-          swal.fire('Acceso denegado', `¡no tienes permisos para realizar esa accion!`, 'error');
-        }
-      });
+      if (this.edu.name == null || this.edu.institute == null || this.edu.status == null) {
+        this.alert.alertCampVacios();
+      } else {
+
+        this.eduService.saveEdu(this.edu).subscribe(res => {
+          this.authService.reload();
+        }, err => {
+          if (err.status == 401) {
+            this.authService.clearSession();
+            this.alert.alert401();
+          }
+          if (err.status == 403) {
+            this.alert.alert403();
+          }
+        });
+      }
     } else {
       this.authService.clearSession();
-      swal.fire('Error', `no se encuentra autenticado`, 'info')
+      this.alert.alertNoAuth();
     }
   }
 
@@ -80,16 +82,16 @@ export class EducacionComponent implements OnInit {
       }, err => {
         if (err.status == 401) {
           this.authService.clearSession();
-          swal.fire('ERROR', '¡no autenticado!', 'error')
+         this.alert.alert401();
         }
         if (err.status == 403) {
-          swal.fire('Acceso denegado', `¡no tienes permisos para realizar esa accion!`, 'error');
+          this.alert.alert403();
         }
       });
 
     } else {
       this.authService.clearSession();
-      swal.fire('Error', `no se encuentra autenticado`, 'info')
+      this.alert.alertNoAuth();
     }
   }
 
@@ -102,19 +104,19 @@ export class EducacionComponent implements OnInit {
         err => {
           if (err.status == 401) {
             this.authService.clearSession();
-            swal.fire('ERROR', '¡no autenticado!', 'error')
+            this.alert.alert401();
           }
           if (err.status == 403) {
-            swal.fire('Acceso denegado', `¡no tienes permisos para realizar esa accion!`, 'error');
+            this.alert.alert403();
           }
         });
     } else {
       this.authService.clearSession();
-      swal.fire('Error', `no se encuentra autenticado`, 'info')
+      this.alert.alertNoAuth();
     }
   }
 
-  active() : boolean {
+  active(): boolean {
     return this.authService.isAuthenticated();
   }
 
@@ -125,7 +127,7 @@ export class EducacionComponent implements OnInit {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
-  
+
   openModalTitle(content: any, e: Title) {
     this.eduAux = e;
     this.eduEdit.idTitle = e.idTitle;
@@ -135,14 +137,14 @@ export class EducacionComponent implements OnInit {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
-  
+
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
       return 'by clicking on a backdrop';
     } else {
-      return  `with: ${reason}`;
+      return `with: ${reason}`;
     }
   }
 

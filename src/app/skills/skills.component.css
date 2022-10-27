@@ -120,9 +120,19 @@
   transform: scale(0.5);
 }
 
+.buttons{
+  margin: 10px;
+}
 
 @media screen and (max-width: 1200px){
   .logo-skill,.logo-lang{
     display: none;
   }
+
+  .language,.buttons{
+    margin: 2%;
+    padding: 0%;
+  }
+
+  
 }

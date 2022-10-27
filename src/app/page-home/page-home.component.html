@@ -1,15 +1,20 @@
     <app-nav></app-nav> 
-    <div *ngIf="person.name !== 'gabriel' ;else spinner ">
+    <div *ngIf="person.name !== 'GABRIEL' ;else spinner ">
         <app-spinners></app-spinners>
         
     </div>
 
     <ng-template #spinner>
-        <app-banner></app-banner>
-        <app-experiencia></app-experiencia>
-        <app-educacion></app-educacion>
-        <app-skills></app-skills>
-        <app-proyectos></app-proyectos>
+        <div>
+              <div class="btn_flotante">
+                <a href="#nav" class="btn-mas"><label for="btn-mas" class="fa fa-home"></label></a>
+              </div> 
+            <app-banner></app-banner>
+            <app-experiencia></app-experiencia>
+            <app-educacion></app-educacion> 
+            <app-skills></app-skills>
+            <app-proyectos></app-proyectos>
+        </div>
     </ng-template>
     
     

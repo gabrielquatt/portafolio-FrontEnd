@@ -1,4 +1,5 @@
 <section id="skills" class="skills p-4">
+
   <div class="p-4">
     <div class=" container text-center">
       <div class="row">
@@ -18,18 +19,17 @@
               <div class="card shadow rounded bg-color">
                 <img [src]="s.imgUrl" height='120rem' width='' class="card-img-top" [alt]="s.name">
                 <div class="card-body">
-                  <h5 class="card-title">{{s.name}}</h5>
+                  <h5 class="card-title text-uppercase">{{s.name}}</h5>
 
                   <ng-container *ngIf="s.level === 1; else second">
-                    <p><span>Nivel:</span> BASICO</p>
-        
+                    <p><span>Nivel:</span> BASICO</p>      
                     <div class = "progress">
                       <div class = "progress-bar w-30"></div>
                     </div>
                   </ng-container>
 
                   <ng-template #second>
-                    <ng-container *ngIf="s.level === 2;else third">
+                    <ng-container *ngIf="s.level === 2; else third">
                       <p class="card-text"><span>Nivel:</span> INTERMEDIO</p>              
                     <div class = "progress">
                       <div class = "progress-bar w-50"></div>
@@ -38,7 +38,7 @@
                   </ng-template>
 
                   <ng-template #third>
-                    <ng-container *ngIf="s.level === 3; else fourt">
+                    <ng-container *ngIf="s.level === 3">
                       <p><span>Nivel:</span> ALTO</p>                   
                     <div class = "progress">
                       <div class = "progress-bar w-70"></div>
@@ -46,22 +46,20 @@
                     </ng-container>
                   </ng-template>
 
-                  <ng-template #fourt>
+                  <ng-container *ngIf="s.level === 4">
                     <p><span>Nivel:</span> AVANZADO</p>
                     <div class = "progress">
                       <div class = "progress-bar w-90"></div>
                     </div>
-                  </ng-template>
+                  </ng-container>
 
                 </div>
-
-                <div *ngIf="active()">
-                  <button type="button" class="btn btn-outline-warning w-50" (click)="openModalSkill(mymodalSkill, s)">Editar <i
-                      class="fa fa-pencil" aria-hidden="true"></i></button>
-                  <button type="button" class="btn btn-outline-danger w-50" (click)="deleteSkill(s.idSkill, s.imgId)">Eliminar
-                    <i class="fa fa-trash" aria-hidden="true"></i></button>
-                </div>
-
+              </div>
+              <div *ngIf="active()">
+                <button type="button" class="btn btn-outline-warning w-50" (click)="openModalSkill(mymodalSkill, s)">Editar <i
+                    class="fa fa-pencil" aria-hidden="true"></i></button>
+                <button type="button" class="btn btn-outline-danger w-50" (click)="deleteSkill(s.idSkill, s.imgId)">Eliminar
+                  <i class="fa fa-trash" aria-hidden="true"></i></button>
               </div>
             </div>
           </div>
@@ -85,10 +83,7 @@
             </div>
           </div>
           <div class="col-9" >
-
-
-            <div class="p-4 m-4 shadow rounded bg-color" *ngFor="let l of languages" data-aos="fade-up" data-aos-duration="1000">
-          
+            <div class="p-4 m-4 shadow rounded bg-color" *ngFor="let l of languages" data-aos="fade-up" data-aos-duration="1000"> 
             <section class="resume container language" >
               <div class="row ">
                 <div class="item">
@@ -97,7 +92,7 @@
                   </div>
 
                   <ng-container *ngIf="l.level === 1">
-                    <h2 class="p-2">{{l.name}}  <span class="span2">BASICO </span></h2>
+                    <h2 class="p-2">{{l.name}}  -<span>BASICO </span></h2>
                   </ng-container>
         
                   <ng-container  *ngIf="l.level === 2">
@@ -112,139 +107,151 @@
                     <h2 class="p-2">{{l.name}}  - <span> AVANZADO </span></h2>
                   </ng-container>
                  
-                  <div *ngIf="active()" class="">
-                    <button type="button" class="btn btn-outline-warning w-50" (click)="openModalLenguaje(mymodal, l)">Editar
-                      <i class="fa fa-pencil" aria-hidden="true"></i></button>
-                    <button type="button" class="btn btn-outline-danger w-50" (click)="deleteLang(l.id_Lenguage)">Eliminar <i
-                        class="fa fa-trash" aria-hidden="true"></i></button>
-                  </div>
+              
                 </div>
               </div>
              
             </section>
-          </div>
-
-
-          
-          </div>
-      
+            <div *ngIf="active()" class="buttons">
+              <button type="button" class="btn btn-outline-warning w-50" (click)="openModalLenguaje(mymodal, l)">Editar
+                <i class="fa fa-pencil" aria-hidden="true"></i></button>
+              <button type="button" class="btn btn-outline-danger w-50" (click)="deleteLang(l.id_Lenguage)">Eliminar <i
+                  class="fa fa-trash" aria-hidden="true"></i></button>
+            </div>
+          </div>       
+          </div>     
         </div>
       </div>
-
+    </div>
+  </div>
       <!-- --------------------------------------------------------------------------------------------------------------------- -->
 
       <!-- Editar Skill -->
       <ng-template #mymodalSkill let-modal>
-        <div class="modal-header form-modal">
+
+        <div class="modal-header form-modal bg-modal">
           <h4 class="modal-title" id="modal-basic-title">Editar Dato Skill</h4>
-          <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
-            <span aria-hidden="true">X</span>
+          <button type="button" class="btn btn-outline-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span class="white" aria-hidden="true">X</span>
           </button>
         </div>
-        <div class="modal-body form-modal">
-          <p>"Nombre : {{skillAux.name}}"</p>
-          <input class="w-100 form-control" [(ngModel)]="skillEdit.name" name="name" type="text"
+
+        <div class="modal-body form-modal bg-modal">
+          <p>NOMBRE SKILL: <span>{{skillAux.name}}</span></p>
+
+          <input class="w-100 form-control text-dark" [(ngModel)]="skillEdit.name" name="name" type="text"
             placeholder="{{skillAux.name}}" require>
           <p></p>
-          <select class="custom-select custom-select-lg mb-3 form-control" [(ngModel)]="skillEdit.level">
-            <option selected value="1">Basico</option>
-            <option value="2">Medio</option>
-            <option value="3">Alto</option>
+
+          <p>NIVEL: <span>{{level}}</span></p>
+          <select class="custom-select custom-select-lg mb-3 form-control W-100" [(ngModel)]="skillEdit.level">
+            <option class="text-dark" selected value="1">Basico</option>
+            <option class="text-dark" value="2">Intermedio</option>
+            <option class="text-dark" value="3">Alto</option>
+            <option class="text-dark" value="4">Avanzado</option>
           </select>
           <p></p>
-          <p>Cambiar Logo</p>
+          <p>CAMBIAR LOGO</p>
           <div class="input-group mb-3">
-            <label class="input-group-text" for="inputGroupFile01">Upload</label>
             <input type="file" class="form-control" (change)="seleccionarFoto($event)" id="inputGroupFile01"
               placeholder="cargar">
           </div>
         </div>
-        <div class="modal-footer form-modal">
-          <button type="button" class="btn btn-success" (click)="editSkill()">Edit</button>
+        <div class="modal-footer form-modal bg-modal">
+          <button type="button" class="btn btn-outline-success" (click)="editSkill()">Edit</button>
         </div>
       </ng-template>
 
       <!-- Edit Lenguaje -->
       <ng-template #mymodal let-modal>
-        <div class="modal-header form-modal">
+        <div class="modal-header form-modal bg-modal">
           <h4 class="modal-title" id="modal-basic-title">Editar Dato Lenguaje</h4>
-          <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
-            <span aria-hidden="true">X</span>
+          <button type="button" class="btn btn-outline-danger bg-modal" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span class="white" aria-hidden="true">X</span>
           </button>
         </div>
-        <div class="modal-body form-modal">
-          <p>"Nombre : {{langAux.name}}"</p>
-          <input class="w-100 form-control" [(ngModel)]="langEdit.name" name="name" type="text"
+        <div class="modal-body form-modal bg-modal">
+          <p>NOMBRE : <span>{{langAux.name}}</span></p>
+          <input class="w-100 form-control text-dark" [(ngModel)]="langEdit.name" name="name" type="text"
             placeholder="{{langAux.name}}" require>
+
           <p></p>
-          <select class="custom-select custom-select-lg mb-3 form-control" [(ngModel)]="langEdit.level">
-            <option selected value="1">Basico</option>
-            <option value="2">Medio</option>
-            <option value="3">Alto</option>
-            <option value="3">Avanzado</option>
+          <p>NIVEL: <span>{{level}}</span></p>
+          <select class="custom-select custom-select-lg mb-3 form-control text-dark w-100" [(ngModel)]="langEdit.level">
+            <option class="text-dark" selected value="1">Basico</option>
+            <option class="text-dark" value="3">Intermedio</option>
+            <option class="text-dark" value="3">Alto</option>
           </select>
         </div>
-        <div class="modal-footer form-modal">
-          <button type="button" class="btn btn-success" (click)="modal.close(editLang())">Guardar</button>
+        <div class="modal-footer form-modal bg-modal">
+          <button type="button" class="btn btn-outline-success" (click)="modal.close(editLang())">Guardar</button>
         </div>
       </ng-template>
 
       <!--New Skill -->
       <ng-template #myModalNewSkill let-modal>
-        <div class="modal-header form-modal">
+
+        <div class="modal-header form-modal bg-modal">
           <h4 class="modal-title" id="modal-basic-title">Editar Dato Skill</h4>
-          <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
-            <span aria-hidden="true">X</span>
+          <button type="button" class="btn btn-outline-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span class="white" aria-hidden="true">X</span>
           </button>
         </div>
-        <div class="modal-body form-modal">
-          <p>"Nombre : {{skillAux.name}}"</p>
-          <input class="w-100 form-control" [(ngModel)]="skill.name" name="name" type="text"
-            placeholder="{{skillAux.name}}" require>
+
+        <div class="modal-body form-modal bg-modal">
+          <p>NOMBRE:</p>
+          <input class="w-100 form-control text-dark" [(ngModel)]="skill.name" name="name" type="text"
+            placeholder="Nombre" require>
           <p></p>
-          <select class="custom-select custom-select-lg mb-3 form-control" [(ngModel)]="skill.level">
-            <option selected value="1">Basico</option>
-            <option value="2">Medio</option>
-            <option value="3">Alto</option>
-            <option value="4">Avanzado</option>
+
+          <p>NIVEL:</p>
+          <select class="custom-select custom-select-lg mb-3 form-control text-dark" [(ngModel)]="skill.level">
+            <option class="text-dark" selected value=1>Basico</option>
+            <option class="text-dark" value=2>Intermedio</option>
+            <option class="text-dark" value=3>Alto</option>
+            <option class="text-dark" value=4>Avanzado</option>
           </select>
+
           <p></p>
-          <p>Cambiar Logo</p>
-          <div class="input-group mb-3">
-            <label class="input-group-text" for="inputGroupFile01">Upload</label>
+          <p>LOGO</p>
+          <div class="input-group mb-3 bg-modal">
             <input type="file" class="form-control" (change)="seleccionarFoto($event)" id="inputGroupFile01"
               placeholder="cargar">
           </div>
         </div>
-        <div class="modal-footer form-modal">
-          <button type="button" class="btn btn-success" (click)="saveSkill()">Guardar</button>
+
+        <div class="modal-footer form-modal bg-modal">
+          <button type="button" class="btn btn-outline-success" (click)="saveSkill()">Guardar</button>
         </div>
+
       </ng-template>
 
       <!-- New Lenguaje -->
       <ng-template #myModalNewLang let-modal>
-        <div class="modal-header form-modal">
+
+        <div class="modal-header form-modal bg-modal">
           <h4 class="modal-title" id="modal-basic-title">Nuevo Info Lenguaje</h4>
-          <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
-            <span aria-hidden="true">X</span>
+          <button type="button" class="btn btn-outline-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span class="white" aria-hidden="true">X</span>
           </button>
         </div>
-        <div class="modal-body form-modal">
-          <p>"Nombre : {{langAux.name}}"</p>
+
+        <div class="modal-body form-modal bg-modal">
+          <p>NOMBRE:</p>
           <input class="w-100 form-control" [(ngModel)]="lang.name" name="name" type="text"
-            placeholder="{{langAux.name}}" require>
+            placeholder="Nombre" require>
           <p></p>
-          <select class="custom-select custom-select-lg mb-3 form-control" [(ngModel)]="lang.level">
-            <option selected value="1">Basico</option>
-            <option value="2">Medio</option>
-            <option value="3">Alto</option>
+
+          <p>NIVEL:</p>
+          <select class="custom-select custom-select-lg mb-3 form-control text-dark"[(ngModel)]="lang.level">
+            <option class="text-dark" selected value="1">Basico</option>
+            <option class="text-dark" value="2">Intermedio</option>
+            <option class="text-dark" value="3">Alto</option>
           </select>
         </div>
-        <div class="modal-footer form-modal">
-          <button type="button" class="btn btn-success" (click)="modal.close(saveLang())">Guardar</button>
+        <div class="modal-footer form-modal bg-modal">
+          <button type="button" class="btn btn-outline-success" (click)="modal.close(saveLang())">Guardar</button>
         </div>
       </ng-template>
 
-    </div>
-  </div>
 </section>

@@ -6,7 +6,7 @@ import { SkillService } from '../service/skill.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '../service/auth.service';
 import { ImagesService } from '../service/images.service';
-import swal from 'sweetalert2';
+import { AlertsService } from '../service/alerts.service';
 
 @Component({
   selector: 'app-skills',
@@ -29,10 +29,13 @@ export class SkillsComponent implements OnInit {
   langAux: Language;
   langEdit: Language;
 
+  level: string;
+
   //Modal
   closeResult: String | undefined;
 
   constructor(
+    private alert:AlertsService,
     private skillService: SkillService,
     private languageService: LanguageService,
     private authService: AuthService,
@@ -44,6 +47,7 @@ export class SkillsComponent implements OnInit {
     this.lang = new Language();
     this.langAux = new Language();
     this.langEdit = new Language();
+    this.level= "";
   }
 
   ngOnInit(): void {
@@ -68,43 +72,49 @@ export class SkillsComponent implements OnInit {
   //Create
   saveSkill() {
     if (this.authService.isAuthenticated()) {
-      if (!this.imgService.fotoSeleccionada) {
-        this.skill.imgUrl = this.imgService.urlDefaultImg;
-        this.skillService.saveSkill(this.skill).subscribe(res => {
-          this.authService.reload();
-        }, err => {
-          if (err.status == 401) {
-            this.authService.clearSession();
-            swal.fire('ERROR', '¡no autenticado!', 'error')
-          }
-          if (err.status == 403) {
-            swal.fire('Acceso denegado', `¡no tienes permisos para realizar esa accion!`, 'error');
-          }
-        });
+      if (this.skill.name == null || this.skill.level == null) {
+        this.alert.alertCampVacios();
       } else {
 
-        this.imgService.subirImgExp(this.imgService.fotoSeleccionada).subscribe(res => {
-          this.skill.imgId = res.id;
-          this.skill.imgUrl = res.imagenUrl;
-
+        if (!this.imgService.fotoSeleccionada) {
+          this.skill.imgUrl = this.imgService.urlDefaultImg;
           this.skillService.saveSkill(this.skill).subscribe(res => {
-            this.imgService.fotoSeleccionada = null;
             this.authService.reload();
           }, err => {
             if (err.status == 401) {
               this.authService.clearSession();
-              swal.fire('ERROR', '¡no autenticado!', 'error')
+              this.alert.alert401();
             }
             if (err.status == 403) {
-              swal.fire('Acceso denegado', `¡no tienes permisos para realizar esa accion!`, 'error');
+              this.alert.alert403();
             }
           });
-        });
+
+        } else {
+
+          this.imgService.subirImgExp(this.imgService.fotoSeleccionada).subscribe(res => {
+            this.skill.imgId = res.id;
+            this.skill.imgUrl = res.imagenUrl;
+            this.skillService.saveSkill(this.skill).subscribe(res => {
+              this.imgService.fotoSeleccionada = null;
+              this.authService.reload();
+            }, err => {
+              if (err.status == 401) {
+                this.authService.clearSession();
+                this.alert.alert401();
+              }
+              if (err.status == 403) {
+                this.alert.alert403();
+              }
+            });
+          });
+        }
+        
       }
 
     } else {
       this.authService.clearSession();
-      swal.fire('Error', `no se encuentra autenticado`, 'info')
+      this.alert.alertNoAuth();
     }
   }
 
@@ -116,7 +126,13 @@ export class SkillsComponent implements OnInit {
         this.skillEdit.name = this.skillAux.name;
       }
       if (this.skillEdit.level == null) {
-        this.skillEdit.level = this.skillEdit.level;
+        this.skillEdit.level = this.skillAux.level;
+      }
+      if (this.skillEdit.imgId == null) {
+        this.skillEdit.imgId = this.skillAux.imgId;
+      }
+      if (this.skillEdit.imgUrl == null) {
+        this.skillEdit.imgUrl = this.skillAux.imgUrl;
       }
 
       if (this.imgService.fotoSeleccionada) {
@@ -126,7 +142,7 @@ export class SkillsComponent implements OnInit {
           }, err => {
             if (err.status == 401) {
               this.authService.clearSession();
-              swal.fire('ERROR', '¡no autenticado!', 'error')
+              this.alert.alert401();
             }
           });
         }
@@ -140,29 +156,30 @@ export class SkillsComponent implements OnInit {
           }, err => {
             if (err.status == 401) {
               this.authService.clearSession();
-              swal.fire('ERROR', '¡no autenticado!', 'error')
+              this.alert.alert401();
             }
             if (err.status == 403) {
-              swal.fire('Acceso denegado', `¡no tienes permisos para realizar esa accion!`, 'error');
+              this.alert.alert403();
             }
           });
         });
       } else {
+
         this.skillService.edit(this.skillEdit).subscribe(r => {
           this.authService.reload();
         }, err => {
           if (err.status == 401) {
             this.authService.clearSession();
-            swal.fire('ERROR', '¡no autenticado!', 'error')
+            this.alert.alert401();
           }
           if (err.status == 403) {
-            swal.fire('Acceso denegado', `¡no tienes permisos para realizar esa accion!`, 'error');
+            this.alert.alert403();
           }
         });
       }
     } else {
       this.authService.clearSession();
-      swal.fire('Error', `no se encuentra autenticado`, 'info')
+      this.alert.alertNoAuth();
     }
   }
 
@@ -177,7 +194,7 @@ export class SkillsComponent implements OnInit {
         }, err => {
           if (err.status == 401) {
             this.authService.clearSession();
-            swal.fire('ERROR', '¡no autenticado!', 'error')
+            this.alert.alert401();
           }
         });
       } else {
@@ -189,17 +206,17 @@ export class SkillsComponent implements OnInit {
         }, err => {
           if (err.status == 401) {
             this.authService.clearSession();
-            swal.fire('ERROR', '¡no autenticado!', 'error')
+            this.alert.alert401();
           }
           if (err.status == 403) {
-            swal.fire('Acceso denegado', `¡no tienes permisos para realizar esa accion!`, 'error');
+            this.alert.alert403();
           }
         });
       }
 
     } else {
       this.authService.clearSession();
-      swal.fire('Error', `no se encuentra autenticado`, 'info')
+      this.alert.alertNoAuth();
     }
   }
 
@@ -207,22 +224,28 @@ export class SkillsComponent implements OnInit {
 
   //Create
   saveLang() {
+    if(this.lang.name == null || this.lang.level == null){
+      this.alert.alertCampVacios();
+    }else{
     if (this.authService.isAuthenticated()) {
+
       this.languageService.saveLanguage(this.lang).subscribe(res => {
         this.authService.reload();
       }, err => {
         if (err.status == 401) {
           this.authService.clearSession();
-          swal.fire('ERROR', '¡no autenticado!', 'error')
+          this.alert.alert401();
         }
         if (err.status == 403) {
-          swal.fire('Acceso denegado', `¡no tienes permisos para realizar esa accion!`, 'error');
+          this.alert.alert403();
         }
       });
     } else {
       this.authService.clearSession();
-      swal.fire('Error', `no se encuentra autenticado`, 'info')
+      this.alert.alertNoAuth();
     }
+    this.lang = new Language();
+  }
   }
 
   //Update
@@ -241,16 +264,16 @@ export class SkillsComponent implements OnInit {
       }, err => {
         if (err.status == 401) {
           this.authService.clearSession();
-          swal.fire('ERROR', '¡no autenticado!', 'error')
+          this.alert.alert401();
         }
         if (err.status == 403) {
-          swal.fire('Acceso denegado', `¡no tienes permisos para realizar esa accion!`, 'error');
+          this.alert.alert403();
         }
       });
 
     } else {
       this.authService.clearSession();
-      swal.fire('Error', `no se encuentra autenticado`, 'info')
+      this.alert.alertNoAuth();
     }
   }
 
@@ -263,15 +286,15 @@ export class SkillsComponent implements OnInit {
         err => {
           if (err.status == 401) {
             this.authService.clearSession();
-            swal.fire('ERROR', '¡no autenticado!', 'error')
+            this.alert.alert401();
           }
           if (err.status == 403) {
-            swal.fire('Acceso denegado', `¡no tienes permisos para realizar esa accion!`, 'error');
+            this.alert.alert403();
           }
         });
     } else {
       this.authService.clearSession();
-      swal.fire('Error', `no se encuentra autenticado`, 'info')
+      this.alert.alertNoAuth();
     }
   }
 
@@ -286,6 +309,7 @@ export class SkillsComponent implements OnInit {
   openModalSkill(content: any, skill: Skill) {
     this.skillAux = skill;
     this.skillEdit.idSkill = skill.idSkill;
+    this.setLevelText(skill.level);
     this.modalService.open(content, { centered: true }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
@@ -296,6 +320,7 @@ export class SkillsComponent implements OnInit {
   openModalLenguaje(content: any, lang: Language) {
     this.langAux = lang;
     this.langEdit.id_Lenguage = lang.id_Lenguage;
+    this.setLevelText(lang.level);
     this.modalService.open(content, { centered: true }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
@@ -318,6 +343,19 @@ export class SkillsComponent implements OnInit {
       return 'by clicking on a backdrop';
     } else {
       return `with: ${reason}`;
+    }
+  }
+
+  private setLevelText(n: number){
+    if(n === 2){
+        this.level = "INTERMEDIO"
+    }else if ( n === 3){
+      this.level = "ALTO"
+    } else if ( n === 4){
+      this.level = "AVANZADO"
+    }
+    else{
+      this.level = "BASICO"
     }
   }
 }

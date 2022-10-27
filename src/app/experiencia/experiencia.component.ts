@@ -3,9 +3,8 @@ import { ExperienceService } from '../service/experience.service';
 import { Experience } from '../Model/Experience';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '../service/auth.service';
-// import swal from 'sweetalert2';
-import swal from 'sweetalert2/dist/sweetalert2.js';
 import { ImagesService } from '../service/images.service';
+import { AlertsService } from '../service/alerts.service';
 
 @Component({
   selector: 'app-experiencia',
@@ -24,6 +23,7 @@ export class ExperienciaComponent implements OnInit {
   closeResult: String | undefined;
 
   constructor(
+    private alert:AlertsService,
     private expService: ExperienceService, 
     private modalService: NgbModal, 
     private authService: AuthService, 
@@ -50,18 +50,22 @@ export class ExperienciaComponent implements OnInit {
   //Create
   saveExperience() {
     if (this.authService.isAuthenticated()) {
+
+      if(this.exp.name == null || this.exp.description == null || this.exp.anio == null){
+        this.alert.alertCampVacios();
+      }else{
+
       if (!this.imgService.fotoSeleccionada) {
         this.exp.logoUrl = this.imgService.urlDefaultImg;
         this.expService.saveExp(this.exp).subscribe(res => {
-
           this.authService.reload();
         }, err => {
           if (err.status == 401) {
             this.authService.clearSession();
-            swal.fire('ERROR', '¡no autenticado!', 'error')
+            this.alert.alert401();
           }
           if (err.status == 403) {
-            swal.fire('Acceso denegado', `¡no tienes permisos para realizar esa accion!`, 'error');
+            this.alert.alert403();
           }
         });
       } else {
@@ -76,18 +80,18 @@ export class ExperienciaComponent implements OnInit {
           }, err => {
             if (err.status == 401) {
               this.authService.clearSession();
-              swal.fire('ERROR', '¡no autenticado!', 'error')
+              this.alert.alert401();
             }
             if (err.status == 403) {
-              swal.fire('Acceso denegado', `¡no tienes permisos para realizar esa accion!`, 'error');
+              this.alert.alert403();
             }
           });
         });
       }
-
+    }
     } else {
       this.authService.clearSession();
-      swal.fire('Error', `no se encuentra autenticado`, 'info')
+      this.alert.alertNoAuth();
     }
   }
 
@@ -95,6 +99,9 @@ export class ExperienciaComponent implements OnInit {
   editExp() {
     if (this.authService.isAuthenticated()) {
 
+      if (this.expEdit.name == null) {
+        this.expEdit.name = this.expAux.name;
+      }
       if (this.expEdit.anio == null) {
         this.expEdit.anio = this.expAux.anio;
       }
@@ -115,7 +122,7 @@ export class ExperienciaComponent implements OnInit {
           }, err => {
             if (err.status == 401) {
               this.authService.clearSession();
-              swal.fire('ERROR', '¡no autenticado!', 'error')
+              this.alert.alert401();
             }
           });
         }
@@ -129,10 +136,10 @@ export class ExperienciaComponent implements OnInit {
           }, err => {
             if (err.status == 401) {
               this.authService.clearSession();
-              swal.fire('ERROR', '¡no autenticado!', 'error')
+              this.alert.alert401();
             }
             if (err.status == 403) {
-              swal.fire('Acceso denegado', `¡no tienes permisos para realizar esa accion!`, 'error');
+              this.alert.alert403();
             }
           });
         });
@@ -142,16 +149,16 @@ export class ExperienciaComponent implements OnInit {
         }, err => {
           if (err.status == 401) {
             this.authService.clearSession();
-            swal.fire('ERROR', '¡no autenticado!', 'error')
+            this.alert.alert401();
           }
           if (err.status == 403) {
-            swal.fire('Acceso denegado', `¡no tienes permisos para realizar esa accion!`, 'error');
+            this.alert.alert403();
           }
         });
       }
     } else {
       this.authService.clearSession();
-      swal.fire('Error', `no se encuentra autenticado`, 'info')
+      this.alert.alertNoAuth();
     }
   }
 
@@ -166,7 +173,7 @@ export class ExperienciaComponent implements OnInit {
         }, err => {
           if (err.status == 401) {
             this.authService.clearSession();
-            swal.fire('ERROR', '¡no autenticado!', 'error')
+            this.alert.alert401();
           }
         });
       } else {
@@ -178,17 +185,17 @@ export class ExperienciaComponent implements OnInit {
         }, err => {
           if (err.status == 401) {
             this.authService.clearSession();
-            swal.fire('ERROR', '¡no autenticado!', 'error')
+            this.alert.alert401();
           }
           if (err.status == 403) {
-            swal.fire('Acceso denegado', `¡no tienes permisos para realizar esa accion!`, 'error');
+            this.alert.alert403();
           }
         });
       }
 
     } else {
       this.authService.clearSession();
-      swal.fire('Error', `no se encuentra autenticado`, 'info')
+      this.alert.alertNoAuth();
     }
   }
 
@@ -200,12 +207,12 @@ export class ExperienciaComponent implements OnInit {
 
   subirImgExp(): any {
     if (!this.imgService.fotoSeleccionada) {
-      swal.fire('Error: ', 'Debe seleccionar una foto', 'error');
+      this.alert.alertCampVaciosImg();
     } else {
       this.imgService.subirImgExp(this.imgService.fotoSeleccionada).subscribe(res => {
         console.log(res);
-      });
-      swal.fire('Finalizado!', 'la foto se  cambio correctamente', 'success');
+      });   
+      this.alert.alertSaveImgSuccess();
     }
   }
 

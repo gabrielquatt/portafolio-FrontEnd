@@ -3,7 +3,7 @@
     <div class="container p-4">
 
       <div class="row">
-        <div class="col-3" data-aos="fade-up-left">
+        <div class="col-3" data-aos="zoom-in">
           <h1>PROYECTOS</h1>
           <div class="logo-proj"></div>
 
@@ -16,12 +16,12 @@
 
         </div>
 
-        <div class="col-9" data-aos="fade-up-left">
+        <div class="col-9">
 
           <!-- blog page -->
           <section class="blog container project ">
             <div class="row">
-              <div class="item p-2 shadow rounded bg-color" *ngFor="let p of proyectList" data-aos="fade-up-left">
+              <div class="item p-2 shadow rounded bg-color" *ngFor="let p of proyectList" data-aos="zoom-in">
                 <div class="item-img">
                   <img [src]="p.imgProyect" width="450" height="250" class="rounded mx-auto d-block" [alt]="p.name">
                 </div>
@@ -52,75 +52,73 @@
 
     <!-- Model Edit -->
     <ng-template #mymodalProyectEdit let-modal>
-      <div class="modal-header form-modal">
+      <div class="modal-header form-modal bg-modal">
         <h4 class="modal-title" id="modal-basic-title">Editar Dato Proyecto</h4>
         <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
-          <span aria-hidden="true">X</span>
+          <span class="white" aria-hidden="true">X</span>
         </button>
       </div>
-      <div class="modal-body form-modal">
+      <div class="modal-body form-modal bg-modal">
         <div>
-          <p>Nombre</p>
-          <input type="text" placeholder="Nombre Proyecto" [(ngModel)]="pEdit.name">
+          <p>NOMBRE: <span>{{pAux.name}}</span></p>
+          <input class="w-100 text-dark" type="text" placeholder="Nombre Proyecto" [(ngModel)]="pEdit.name">
         </div>
         <p></p>
         <div>
-          <p for="description">Descripcion: </p>
-          <textarea class="w-100" [(ngModel)]="pEdit.description" name="description"
+          <p>DESCRICIÓN:: <span>{{pAux.description}}</span></p>
+          <textarea class="w-100 text-dark" [(ngModel)]="pEdit.description" name="description"
             placeholder="Descripcion de puesto y trabajo" required></textarea>
         </div>
         <p></p>
         <div>
-          <p for="description">Link: </p>
-          <input name="description" placeholder="url" required [(ngModel)]="pEdit.link">
+          <p>LINK: <span>{{pAux.link}}</span></p>
+          <input class="w-100 text-dark" name="description" placeholder="url" required [(ngModel)]="pEdit.link">
         </div>
         <p></p>
-        <p></p>
+        <p>IMAGEN VISTA PREVIA</p>
         <div class="input-group mb-3">
-          <label class="input-group-text" for="inputGroupFile01">Vista previa</label>
           <input type="file" class="form-control" (change)="seleccionarFoto($event)" id="inputGroupFile01"
             placeholder="cargar">
         </div>
-      </div>
-      <div class="modal-footer form-modal">
-        <button type="button" class="btn btn-success" (click)="modal.close(editProyect())">Guardar Cambios</button>
+      </div> 
+      <div class="modal-footer form-modal bg-modal">
+        <button type="button" class="btn btn-outline-success" (click)="modal.close(editProyect())">Guardar Cambios</button>
       </div>
     </ng-template>
 
     <!-- Model New -->
     <ng-template #mymodalProyect let-modal>
-      <div class="modal-header form-modal">
+      <div class="modal-header form-modal bg-modal">
         <h4 class="modal-title" id="modal-basic-title">Nuevo Datos Proyecto</h4>
-        <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
-          <span aria-hidden="true">X</span>
+        <button type="button" class="btn btn-outline-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span class="white" aria-hidden="true">X</span>
         </button>
       </div>
-      <div class="modal-body form-modal">
+      <div class="modal-body form-modal bg-modal">
         <div>
-          <p>Nombre</p>
-          <input type="text" placeholder="Nombre Proyecto" [(ngModel)]="p.name">
+          <p>NOMBRE:</p>
+          <input class="w-100 text-dark" type="text" placeholder="Nombre Proyecto" [(ngModel)]="p.name">
         </div>
         <p></p>
         <div>
-          <p for="description">Descripcion: </p>
-          <textarea class="w-100" [(ngModel)]="p.description" name="description"
+          <p>DESCRICIÓN:</p>
+          <textarea class="w-100 text-dark" [(ngModel)]="p.description" name="description"
             placeholder="Descripcion de puesto y trabajo" required></textarea>
         </div>
         <p></p>
         <div>
-          <p for="description">Link: </p>
-          <input name="description" placeholder="url" required [(ngModel)]="p.link">
+          <p>LINK:</p>
+          <input class="w-100 text-dark" name="description" placeholder="url" required [(ngModel)]="p.link">
         </div>
         <p></p>
-        <p></p>
+        <p >IMAGEN VISTA PREVIA</p>
         <div class="input-group mb-3">
-          <label class="input-group-text" for="inputGroupFile01">Vista previa</label>
           <input type="file" class="form-control" (change)="seleccionarFoto($event)" id="inputGroupFile01"
             placeholder="cargar">
         </div>
       </div>
-      <div class="modal-footer form-modal">
-        <button type="button" class="btn btn-success" (click)="modal.close(saveProyect())">Guardar</button>
+      <div class="modal-footer form-modal bg-modal">
+        <button type="button" class="btn btn-outline-success" (click)="modal.close(saveProyect())">Guardar</button>
       </div>
     </ng-template>
 

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Proyect } from '../Model/Proyect';
 
-const _url = '/api/proyect/';
+const _url = 'https://evening-plains-46907.herokuapp.com/api/proyect/';
 
 @Injectable({
   providedIn: 'root'

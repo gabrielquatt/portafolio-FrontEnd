@@ -4,9 +4,9 @@
 
     <div class="row">
 
-      <div class="col-3 " data-aos="flip-up">
+      <div class="col-3 p-4" data-aos="flip-up">
         <div class="text-center title-exp">
-          <h1>Experiencia Laboral</h1>
+          <h1>EXPERIENCIA LABORAL</h1>
           <div class="logo-exp"></div>
           <div *ngIf="active()">
             <button (click)="openNewExp(myNewmodalExp)" class="btn btn-outline-success w-100 p2">Agregar Experiencia
@@ -16,31 +16,36 @@
       </div>
 
       <div class="col-9">
-        <div class="card p-2 m-2 shadow rounded bg-color" *ngFor="let exp of experienceList" data-aos="flip-up">
+        <div class="card p-2 m-4 shadow rounded bg-color" *ngFor="let exp of experienceList" data-aos="flip-up">
           <div class="parent-exp" data-aos="fade-right">
-            <div class="div1-exp"> <img [src]='exp.logoUrl' width="160" height="135" class="rounded mx-auto d-block"
+            <div class="div1-exp"> <img [src]='exp.logoUrl' width="120" height="100" class="rounded mx-auto d-block"
                 [alt]="exp.name">
             </div>
             <div class="div2-exp">
-              <section class = "resume container-exp ">
-                <div class = "row">
-                  <div class = "item">
-                    <div class = "icon">
-                      <i class = "fas fa-briefcase"></i>
+              <section class="resume container-exp ">
+                <div class="row">
+                  <div class="item">
+                    <div class="icon">
+                      <i class="fas fa-briefcase"></i>
                     </div>
-                    <span>{{exp.anio}}</span>
-                    <h2>{{exp.name}}</h2>
-                    <p class = "text">{{exp.description}}</p>
+                    <span class="m-2">{{exp.anio}}</span>
+                    <div class="m-2">
+                      <h2>{{exp.name}}</h2>
+                    </div>
+                    <div class="m-2">
+                      <p class="text">{{exp.description}}</p>
+                    </div>
                   </div>
                 </div>
-                <div class="" *ngIf="active()">
-                    <button type="button" class="btn btn-outline-warning w-50" (click)="openModalExp(mymodalExp, exp)">Editar <i
-                        class="fa fa-pencil" aria-hidden="true"></i></button>
-                    <button type="button" class="btn btn-outline-danger w-50" (click)="delteExp(exp.id, exp.idImg)"> Eliminar <i
-                        class="fa fa-trash" aria-hidden="true"></i></button>
-                </div>
+
               </section>
-            </div> 
+            </div>
+          </div>
+          <div class="" *ngIf="active()">
+            <button type="button" class="btn btn-outline-warning w-50" (click)="openModalExp(mymodalExp, exp)">Editar <i
+                class="fa fa-pencil" aria-hidden="true"></i></button>
+            <button type="button" class="btn btn-outline-danger w-50" (click)="delteExp(exp.id, exp.idImg)"> Eliminar <i
+                class="fa fa-trash" aria-hidden="true"></i></button>
           </div>
         </div>
       </div>
@@ -49,76 +54,82 @@
 
     <!-- MODAL EDIT -->
     <ng-template #mymodalExp let-modal>
-      <div class="modal-header">
+      <div class="modal-header bg-modal">
         <h4 class="modal-title" id="modal-basic-title">Editar Dato Experiencia Laboral</h4>
-        <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
-          <span aria-hidden="true">X</span>
+        <button type="button" class="btn btn-outline-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span class="white" aria-hidden="true">X</span>
         </button>
       </div>
 
-      <div class="modal-body form-modal">
-
-
-        <p>"Descripcion : {{expAux.description}}"</p>
-        <textarea class="w-100" [(ngModel)]="expEdit.description" name="name" type="text"
-          placeholder="{{expAux.description}}" require></textarea>
-        <br>
-
-        <div>
-          <p for="year"> Año Anterior: "{{expAux.anio}}"</p>
-          <input class="text-center" [(ngModel)]="expEdit.anio" placeholder="{{expAux.anio}}" name="year" type="number"
-            min="2000" max="2050" required>
+      <div class="modal-body form-modal bg-modal p-4">
+        <div class="p-2">
+          <div>
+            <p> NOMBRE: <span>{{expAux.name}}</span></p>
+            <input class=" w-100 text-dark" [(ngModel)]="expEdit.name" placeholder="{{expAux.name}}" name="name"
+              required>
+          </div>
+          <p></p>
+          <p>DESCRIPCIÓN: <span>{{expAux.description}}</span></p>
+          <textarea class="w-100 text-dark" [(ngModel)]="expEdit.description" name="name" type="text"
+            placeholder="{{expAux.description}}" require></textarea>
+          <p></p>
+          <div>
+            <p> AÑO: <span>{{expAux.anio}}</span></p>
+            <input class="text-center w-100 text-dark" [(ngModel)]="expEdit.anio" placeholder="{{expAux.anio}}"
+              name="year" type="number" min="2000" max="2050" required>
+          </div>
+          <p></p>
+          <p>CAMBIAR LOGO</p>
+          <div class="input-group">
+            <input type="file" class="form-control" (change)="seleccionarFoto($event)" id="inputGroupFile01"
+              placeholder="cargar">
+          </div>
         </div>
-
-
-        <p></p>
-        <p>Cambiar Logo</p>
-        <div class="input-group mb-3">
-          <label class="input-group-text" for="inputGroupFile01">Upload</label>
-          <input type="file" class="form-control" (change)="seleccionarFoto($event)" id="inputGroupFile01"
-            placeholder="cargar">
-        </div>
-
       </div>
-      <br>
-      <div class="modal-footer form-modal mb-12">
-        <button type="button" class="btn btn-success" (click)="modal.close(editExp())">Ok</button>
+      <div class="modal-footer form-modal mb-12 bg-modal">
+        <button type="button" class="btn btn-outline-success" (click)="modal.close(editExp())">Ok</button>
       </div>
     </ng-template>
 
     <!-- MODAL NEW -->
     <ng-template #myNewmodalExp let-modal>
-      <div class="modal-header">
+      <div class="modal-header bg-modal">
         <h4 class="modal-title" id="modal-basic-title"> Agregar Nueva Experiencia Laboral</h4>
-        <button type="button" class="btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
-          <span aria-hidden="true">X</span>
+        <button type="button" class="btn btn-outline-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span class="white" aria-hidden="true">X</span>
         </button>
       </div>
-      <div class="modal-body form-modal">
+      <div class="modal-body form-modal bg-modal p-4">
+        <div class="p-2">
 
-        <label for="number">Año</label>
-        <p></p>
-        <input [(ngModel)]="exp.anio" name="year" type="number" min="2000" max="2050" required>
-        <br>
-        <br>
-        <p for="description">Descripcion</p>
-        <textarea [(ngModel)]="exp.description" name="description" placeholder="Descripcion de puesto y trabajo"
-          required>
-                <br>
-                <br>
-                <label for="logo">empresa</label>
-                <textarea  placeholder="Logo TODO" ></textarea>
+          <div>
+            <p> NOMBRE: </p>
+            <input class=" w-100 text-dark" [(ngModel)]="exp.name" placeholder="Nombre Trabajo/Puesto" name="name"
+              required>
+          </div>
+          <p></p>
 
-        <p></p>
-        <div class="input-group mb-3">
-          <label class="input-group-text" for="inputGroupFile01">Logo</label>
-          <input type="file" class="form-control" (change)="seleccionarFoto($event)" id="inputGroupFile01"
-            placeholder="cargar">
+          <div>
+            <p>DESCRIPCIÓN: </p>
+            <textarea class="w-100 text-dark" [(ngModel)]="exp.description" name="description"
+              placeholder="Descripcion de puesto y trabajo" required></textarea>
+          </div>
+          <p></p>
+          <div>
+            <p>AÑO: </p>
+            <input class="w-100 text-dark text-center" [(ngModel)]="exp.anio" name="year" type="number" min="2000"
+              max="2050" required>
+          </div>
+          <p></p>
+          <p>AGREGAR LOGO</p>
+          <div class="input-group mb-3 bg-modal">
+            <input type="file" class="form-control" (change)="seleccionarFoto($event)" id="inputGroupFile01"
+              placeholder="cargar">
+          </div>
         </div>
-
       </div>
-      <div class="modal-footer form-modal">
-        <button type="button" class="btn btn-success" (click)=" modal.close(saveExperience())">Cargar</button>
+      <div class="modal-footer form-modal bg-modal">
+        <button type="button" class="btn btn-outline-success" (click)=" modal.close(saveExperience())">Cargar</button>
       </div>
     </ng-template>
 

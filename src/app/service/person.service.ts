@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Persona } from '../Model/Person';
 
-const _url = '/api/person/';
+const _url = 'https://evening-plains-46907.herokuapp.com/api/person/';
 
 @Injectable({
   providedIn: 'root'

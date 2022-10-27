@@ -1,28 +1,6 @@
 
- 
-
-  /* .parent-education {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
-    }
-    
-    .div1-education { grid-area: 1 / 1 / 2 / 5; }
-    .div2-education { grid-area: 1 / 5 / 2 / 6; }
-    .div3-education { grid-area: 2 / 1 / 3 / 6; } */
-
-    .alert{
-    position: relative;
-    padding: 1px;
-    margin-bottom: opx;
-    border: 1px solid transparent;
-    border-radius: 0.25rem;
-    }
 
 
-    
 /* #### RESUME PAGE #### */
 /* .resume{
   padding: 0rem 0 2.5rem 0;
@@ -32,9 +10,9 @@
   text-align: center;
 }
 .resume .item{
+  height: 4rem;
   padding: 0 2.5rem;
   margin: 0 2.5rem 0 2.5rem;
-  border-left: 1px solid var(--green);
   position: relative;
 }
 .resume .item > span{
@@ -58,7 +36,7 @@
 }
 .resume .item h2 .span2{
   font-size: 1rem;
-  color: var(--warning2);
+  color: var(--warning);
 }
 .resume .item .text{
   font-size: 1rem;
@@ -91,12 +69,19 @@
   height:15rem;
   -webkit-mask: url("../../assets/img/education.svg") no-repeat center;
   mask: url("../../assets/img/education.svg") no-repeat center;
-  transform: scale(1.4);
+  transform: scale(1);
 }
 
 
 @media screen and (max-width: 1200px){
   .logo-edu{
     display: none;
+  }
+  .resume .item{
+    height: 100%;
+  }
+
+  .resume .item h2{
+    font-size: 1rem;
   }
 }

@@ -9,40 +9,63 @@ body{
   background-color: var(--black); 
 }
 
+body::-webkit-scrollbar {
+  width: 0.5em;
+}
+
+body::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+body::-webkit-scrollbar-thumb {
+border-radius: 5%;
+background-color: var(--green-scroll);
+outline: 1px solid var(--nero);
+}
 /*===== VARIABLES CSS =====*/
 
 :root {
-  
   /*===== Fuente y tipografia =====*/
   --poppins: 'Poppins', sans-serif;
   --sans: 'Open Sans', sans-serif;
   /*===== Colores =====*/
   --transition: all 0.4s ease;
+  --green-scroll: #72b626;
   --green: #72b626;
   --black: rgb(14, 14, 14);
-  --bg-dark:  rgba(25, 37, 25, 0.133);
+  --bg-dark: rgba(25, 37, 25, 0.133);
+  --bg-modal: rgb(29, 29, 29);
+  --bg-modal-border: rgb(44, 44, 44);
   --nero: #252525;
   --white: #fff;
-  --warning2:rgb(249, 252, 90);
-  --danger: rgb(255, 60, 60);
-  
-    /*===== z index =====*/
-    --z-fixed: 100;
-  }
+  --warning: #ddda32;
+  --danger: #d80a0a;
+  /*===== z index =====*/
+  --z-fixed: 100;
+}
+
+.bg-modal {
+  background-color: var(--bg-modal);
+  border-color: 4px solid var(--bg-modal-border);
+}
 
 span{
     color: var(--green);
 }
 
+
+input{
+  color: black;
+}
+.white{
+  color: var(--white);
+}
+
+
 a{
   text-decoration: none;
   color: white;
 }
-
-.modal-content {
-  background-color: var(--background-color2);
-  border-color: var(--first-color) ;
- }
 
  button{
   background-color: var(--background-color1);
@@ -203,6 +226,14 @@ nav {
   background-color: var(--bg-dark);
 }
 
+@media (max-width: 600px) {
+
+  .row {
+    display: block;
+  }
+
+}
+
 
 @media screen and (min-width: 500px){
   .title > h2{
@@ -214,9 +245,9 @@ nav {
 }
 
 @media screen and (min-width: 992px){
-  .container{
+  /* .container{
       width: 88vw;
-  }
+  } */
 
 
 }

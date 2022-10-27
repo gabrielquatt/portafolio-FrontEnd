@@ -4,8 +4,7 @@ import { Persona } from '../Model/Person';
 import { AuthService } from '../service/auth.service';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ImagesService } from '../service/images.service';
-// import swal from 'sweetalert2';
-import swal from 'sweetalert2/dist/sweetalert2.js';
+import { AlertsService } from '../service/alerts.service';
 
 @Component({
   selector: 'app-banner',
@@ -22,7 +21,9 @@ export class BannerComponent implements OnInit {
  //Modal
  closeResult: String | undefined;
 
-  constructor(private personService:PersonService, 
+  constructor(
+    private alert:AlertsService,
+    private personService:PersonService, 
     private authService: AuthService,
     private modalService: NgbModal,
     private imgService: ImagesService) 
@@ -35,6 +36,7 @@ export class BannerComponent implements OnInit {
   ngOnInit(): void {
     this.personService.getPerson().subscribe(resp=>{
       this.person = resp;
+      this.pAux = resp;
       this.pEdit.id_Person = 1;
   });
   }
@@ -42,7 +44,6 @@ export class BannerComponent implements OnInit {
   //Update
   editPerson(): void {
     if (this.authService.isAuthenticated()) {
-      
 
       if (this.pEdit.name == null) {
         this.pEdit.name = this.pAux.name;
@@ -56,15 +57,15 @@ export class BannerComponent implements OnInit {
       if (this.pEdit.about == null) {
         this.pEdit.about = this.pAux.about;
       }
-      if (this.pEdit.birthday == null) {
-        this.pEdit.birthday = this.pAux.birthday;
-      }
-      if (this.pEdit.ocupation == null) {
-        this.pEdit.ocupation = this.pAux.ocupation;
-      }
-      if (this.pEdit.mail == null) {
-        this.pEdit.mail = this.pAux.mail;
-      }
+      // if (this.pEdit.birthday == null) {
+      //   this.pEdit.birthday = this.pAux.birthday;
+      // }
+      // if (this.pEdit.ocupation == null) {
+      //   this.pEdit.ocupation = this.pAux.ocupation;
+      // }
+      // if (this.pEdit.mail == null) {
+      //   this.pEdit.mail = this.pAux.mail;
+      // }
 
       //Verifica Si se cambia la imagen de perfil
       if (this.imgService.fotoSeleccionada) {
@@ -74,7 +75,7 @@ export class BannerComponent implements OnInit {
           }, err => {
             if (err.status == 401) {
               this.authService.clearSession();
-              swal.fire('ERROR', '¡no autenticado!', 'error')
+             this.alert.alert401();
             }
           });
         }
@@ -87,10 +88,10 @@ export class BannerComponent implements OnInit {
             }, err => {
               if (err.status == 401) {
                 this.authService.clearSession();
-                swal.fire('ERROR', '¡no autenticado!', 'error')
+                this.alert.alert401();
               }
               if (err.status == 403) {
-                swal.fire('Acceso denegado', `¡no tienes permisos para realizar esa accion!`, 'error');
+                this.alert.alert403();
               }
             });
           });  
@@ -100,16 +101,16 @@ export class BannerComponent implements OnInit {
         }, err => {
           if (err.status == 401) {
             this.authService.clearSession();
-            swal.fire('ERROR', '¡no autenticado!', 'error')
+            this.alert.alert401();
           }
           if (err.status == 403) {
-            swal.fire('Acceso denegado', `¡no tienes permisos para realizar esa accion!`, 'error');
+            this.alert.alert403();
           }
         });
       } 
     } else {
       this.authService.clearSession();
-      swal.fire('Error', `no se encuentra autenticado`, 'info')
+      this.alert.alertNoAuth();
     }
   }
 
@@ -126,7 +127,7 @@ export class BannerComponent implements OnInit {
   }
 
   openModalEditPerfil(content: any, p: Persona) {
-    this.pAux = p;
+ 
     this.pEdit.id_Person = p.id_Person;
     this.modalService.open(content, { centered: true }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;

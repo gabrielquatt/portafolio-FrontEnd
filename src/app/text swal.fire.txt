@@ -1,0 +1,66 @@
+
+###  No Autenticado ###        error     401
+
+             swal.fire({ // No Autenticado
+              title:'Error',
+              text: `¡no autenticado!`,
+              icon: 'error',
+              background: '#212422',
+              color: '#d80a0a'
+            });
+            this.authService.reload();
+
+### Acceso Denegado ###        error     403
+
+            swal.fire({ //Acceso Denegado
+              title:'Acceso Denegado',
+              text: `¡no tienes permisos para realizar esa accion!`,
+              icon: 'error',
+              background: '#212422',
+              color: '#d80a0a'
+            });
+
+### no se encuentra autenticado ###    info
+
+            swal.fire({ //no se encuentra autenticado
+                title:'Sesion Terminada',
+                text: `no se encuentra autenticado`,
+                icon: 'info',
+                background: '#212422',
+                color: '#ddda32'
+            });
+            this.authService.reload();
+
+
+### ¡No Puede Dejar Campos Vacios! ###  info
+
+            swal.fire({ //¡No Puede Dejar Campos Vacios!
+                title:'Error Campos Vacios',
+                text: `¡No Puede Dejar Campos Vacios!`,
+                icon: 'info',
+                background: '#212422',
+                color: '#ddda32'
+            });
+
+
+
+### foto ### error              successs
+
+    swal.fire({ //¡No Puede Dejar Campos Vacios img!
+        title:'Error Debe Seleccionar una Imagen',
+        text: 'Debe seleccionar una foto',
+        icon: 'info',
+        background: '#212422',
+        color: '#ddda32'
+    });
+
+
+### foto correct ### success     success
+
+    swal.fire({ //¡Finalizado!
+        title:'¡Finalizado!',
+        text: 'Debe seleccionar una foto',
+        icon: 'success',
+        background: '#212422',
+        color: '#72b626'
+    });
